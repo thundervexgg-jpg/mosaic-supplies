@@ -108,6 +108,13 @@ export default function Trade() {
             >
               {CONTACT.email}
             </a>
+            <a
+              href={`tel:${CONTACT.phoneHref}`}
+              className="wordmark mt-4 block"
+              style={{ fontSize: 'clamp(18px, 1.9vw, 28px)', color: COLOR.onDark }}
+            >
+              {CONTACT.phone}
+            </a>
           </Reveal>
 
           {/* Twenty tiles waiting to be placed — one supplier account each. */}

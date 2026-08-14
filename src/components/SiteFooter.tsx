@@ -56,6 +56,13 @@ export default function SiteFooter() {
               >
                 {CONTACT.email}
               </a>
+              <a
+                href={`tel:${CONTACT.phoneHref}`}
+                className="eyebrow"
+                style={{ color: COLOR.ink, letterSpacing: '0.14em' }}
+              >
+                {CONTACT.phone}
+              </a>
             </div>
           </div>
         </Reveal>

@@ -35,4 +35,7 @@ export const HERO_VIDEO_URL =
 export const CONTACT = {
   email: 'trade@mosaic-supplies.co.uk',
   domain: 'mosaic-supplies.co.uk',
+  /** Spaced for reading; the tel: form is E.164 so it dials correctly from abroad. */
+  phone: '07340 236433',
+  phoneHref: '+447340236433',
 } as const
