@@ -22,15 +22,15 @@ export const EXPO_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1]
 export const EASE_OUT: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94]
 
 /**
- * Hero background footage.
+ * Hero background footage, served from our own origin.
  *
- * NOTE: this is the reference clip that came with the design brief, served from a
- * third-party CDN. It is fine for a preview build, but it is not our asset and the
- * host could pull it at any time. Replace with our own file in /public before this
- * URL goes out on trade applications — the hero degrades to solid Basalt if it fails.
+ * Was hotlinked from the reference design's CDN, which meant a host we do not control
+ * could have blanked the hero at any moment. Mirrored into /public instead.
+ *
+ * The hero degrades to solid Basalt if it fails to load, and hides itself if a browser
+ * refuses to autoplay it, so it is decoration that can never break the page.
  */
-export const HERO_VIDEO_URL =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260620_185230_f7f71ef4-6655-469f-b9c6-efbdc1f7684a.mp4'
+export const HERO_VIDEO_URL = '/hero.mp4'
 
 export const CONTACT = {
   email: 'trade@mosaic-supplies.co.uk',
