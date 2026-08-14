@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=DM+Serif+Display:ital@0;1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #0c0c0d;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #0c0c0d;
+  color: #0c0c0d;
+}
+
+#root {
+  isolation: isolate;
+}
+
+/* The identity's micro-label: uppercase, letterspaced, small. Used throughout. */
+.eyebrow {
+  font-size: clamp(9.5px, min(1.15vh, 0.85vw), 11px);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+/* Giant display headline. Barlow Condensed 800, tight. */
+.display {
+  font-family: 'Barlow Condensed', Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.78;
+}
+
+.wordmark {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+/* Keeps focus rings visible for keyboard users without showing them on mouse click. */
+:focus-visible {
+  outline: 2px solid #b0623f;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
