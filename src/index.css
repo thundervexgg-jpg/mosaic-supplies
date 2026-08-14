@@ -56,6 +56,22 @@ body {
   outline-offset: 3px;
 }
 
+/*
+  iOS Safari draws a large play glyph over any <video> it has not started, and keeps a
+  tappable control layer on it even with no `controls` attribute. On a decorative
+  background that reads as a broken video the visitor is being asked to start. Strip the
+  whole native control layer; the element is inert wallpaper and must never look tappable.
+*/
+video::-webkit-media-controls,
+video::-webkit-media-controls-enclosure,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

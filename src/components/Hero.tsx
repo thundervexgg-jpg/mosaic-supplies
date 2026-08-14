@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Header from './Header'
 import CtaPill from './CtaPill'
 import TilePanel from './TilePanel'
@@ -41,11 +41,36 @@ function RevealLine({
 export default function Hero() {
   const [videoReady, setVideoReady] = useState(false)
 
+  const videoRef = useRef<HTMLVideoElement>(null)
+
   // The footage is served from a third-party CDN we do not control. If it is slow or
-  // gone, the hero must still appear — never leave the page blank waiting on it.
+  // gone, the hero must still appear. Never leave the page blank waiting on it.
   useEffect(() => {
     const t = setTimeout(() => setVideoReady(true), 2200)
     return () => clearTimeout(t)
+  }, [])
+
+  /*
+    Safari and Chrome both refuse autoplay in states the `autoPlay` attribute alone cannot
+    recover from, Low Power Mode on iOS being the common one. Ask again on mount, and once
+    more on the visitor's first interaction, which counts as the user gesture the browser
+    was holding out for. Failures are swallowed: this is decoration, and the gradients keep
+    the hero readable whether or not it ever plays.
+  */
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    // React sets `muted` as a property after mount, which can land too late for the
+    // autoplay check. Force it on the element before asking to play.
+    video.muted = true
+
+    const attempt = () => video.play().catch(() => {})
+    attempt()
+
+    const events: Array<keyof WindowEventMap> = ['touchstart', 'pointerdown', 'scroll']
+    events.forEach((e) => window.addEventListener(e, attempt, { once: true, passive: true }))
+    return () => events.forEach((e) => window.removeEventListener(e, attempt))
   }, [])
 
   /*
@@ -64,14 +89,22 @@ export default function Hero() {
       style={{ backgroundColor: COLOR.basalt }}
     >
       <video
-        className="absolute inset-0 z-0 h-full w-full object-cover"
+        ref={videoRef}
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
         style={{ filter: 'grayscale(0.25) contrast(1.03) brightness(0.92)' }}
         src={HERO_VIDEO_URL}
         autoPlay
         muted
         loop
         playsInline
+        // Older iOS honours the vendor-prefixed spelling; without it the clip goes fullscreen.
+        webkit-playsinline="true"
+        x5-playsinline="true"
+        controls={false}
+        disablePictureInPicture
+        disableRemotePlayback
         preload="auto"
+        tabIndex={-1}
         aria-hidden="true"
         onCanPlay={() => setVideoReady(true)}
         onError={() => setVideoReady(true)}
