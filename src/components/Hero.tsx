@@ -40,7 +40,7 @@ function RevealLine({
 
 export default function Hero() {
   const [videoReady, setVideoReady] = useState(false)
-
+  const [videoBlocked, setVideoBlocked] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   // The footage is served from a third-party CDN we do not control. If it is slow or
@@ -70,7 +70,34 @@ export default function Hero() {
 
     const events: Array<keyof WindowEventMap> = ['touchstart', 'pointerdown', 'scroll']
     events.forEach((e) => window.addEventListener(e, attempt, { once: true, passive: true }))
-    return () => events.forEach((e) => window.removeEventListener(e, attempt))
+
+    /*
+      Belt and braces for the play glyph. Hiding Safari's control layer in CSS relies on
+      vendor pseudo-elements whose support varies by version, so do not trust it alone: if
+      the clip is not actually running, take the element out of view and there is nothing
+      left for Safari to draw a button on.
+
+      Deliberately starts visible and only hides once playback is confirmed stalled.
+      Starting hidden risks the browser never bothering to autoplay a hidden element, which
+      would deadlock into permanently losing the video. Polling rather than a one-shot
+      timer so it self-corrects: the moment playback starts, on autoplay or on the
+      visitor's first tap, the video comes back.
+
+      `visibility` rather than `display`, because a hidden-but-laid-out video can still play.
+    */
+    const onPlaying = () => setVideoBlocked(false)
+    video.addEventListener('playing', onPlaying)
+
+    const poll = window.setInterval(() => {
+      if (document.hidden) return
+      setVideoBlocked(video.paused)
+    }, 1200)
+
+    return () => {
+      window.clearInterval(poll)
+      events.forEach((e) => window.removeEventListener(e, attempt))
+      video.removeEventListener('playing', onPlaying)
+    }
   }, [])
 
   /*
@@ -91,7 +118,10 @@ export default function Hero() {
       <video
         ref={videoRef}
         className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
-        style={{ filter: 'grayscale(0.25) contrast(1.03) brightness(0.92)' }}
+        style={{
+          filter: 'grayscale(0.25) contrast(1.03) brightness(0.92)',
+          visibility: videoBlocked ? 'hidden' : 'visible',
+        }}
         src={HERO_VIDEO_URL}
         autoPlay
         muted
