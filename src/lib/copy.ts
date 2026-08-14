@@ -131,11 +131,10 @@ export const TRADE = {
 export const FOOTER = {
   descriptor: 'A UK online retailer of genuine branded everyday goods, sourced on trade terms.',
   /**
-   * REQUIRED, STILL MISSING. A UK company's website must show its registered name, company
-   * number and registered office address. The company is registered but these have not been
-   * supplied yet, so the footer renders nothing rather than inventing them. Fill both in and
-   * the legal line appears automatically.
+   * Legally required disclosure. A UK company's website must carry its registered name,
+   * company number, place of registration and registered office address.
+   * Verified against the Companies House record: incorporated 14 August 2026, status Active.
    */
-  companyNumber: null as string | null,
-  registeredOffice: null as string | null,
+  companyNumber: '17400779' as string | null,
+  registeredOffice: '60 Macquarie Quay, Eastbourne, England, BN23 5AU' as string | null,
 } as const

@@ -37,9 +37,10 @@ Edit copy there, not in components.
 
 ## Still to do
 
-- [ ] **Company number and registered office.** Legally required on a UK company website. Set
-      `companyNumber` and `registeredOffice` in `src/lib/copy.ts` and the footer line appears.
-      Do not invent them.
+- [x] ~~Company number and registered office.~~ Done. Company **17400779**, incorporated
+      14 August 2026, registered office 60 Macquarie Quay, Eastbourne, BN23 5AU. Carried in the
+      footer. If the registered office ever changes at Companies House, update
+      `registeredOffice` in `src/lib/copy.ts` to match.
 - [ ] **Mirror the hero video** (`HERO_VIDEO_URL` in `src/lib/tokens.ts`) into `public/`. It is
       currently hotlinked from a third-party CDN we do not control.
 - [ ] **Mirror the route-map images** in `src/components/RouteMap.tsx`. Same problem.
