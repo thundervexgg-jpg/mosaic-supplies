@@ -1,0 +1,12 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'"><meta name="robots" content="noindex"><title>Bank linking | Mosaic Supplies</title>
+<style>body{margin:0;background:#F3F0E8;color:#0C0C0D;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}main{max-width:720px;margin:0 auto;padding:56px 20px}h1{font-family:Georgia,serif;font-weight:400;font-size:32px}.box{background:#fff;border:1px solid #DCD8CD;padding:16px;font-family:Consolas,monospace;font-size:13px;word-break:break-all;white-space:pre-wrap}button{margin-top:12px;background:#B0623F;color:#F3F0E8;border:0;padding:12px 20px;font-size:14px;cursor:pointer}p{color:#4B4943}</style></head>
+<body><main><h1>Bank linking</h1><p>Paste this address back to Claude to finish linking your bank.</p>
+<div class="box" id="box"></div><button id="copy" type="button">Copy</button> <span id="ok"></span></main>
+<script>
+var u=location.href,q=new URLSearchParams(location.search);
+var t="URL: "+u+"\ncode: "+(q.get("code")||"(none)")+"\nstate: "+(q.get("state")||"(none)");
+if(q.get("error"))t+="\nerror: "+q.get("error")+" "+(q.get("error_description")||"");
+document.getElementById("box").textContent=t;
+document.getElementById("copy").onclick=function(){var d=function(){document.getElementById("ok").textContent="Copied";};
+if(navigator.clipboard)navigator.clipboard.writeText(u).then(d,function(){prompt("Copy this:",u)});else prompt("Copy this:",u);};
+</script></body></html>
